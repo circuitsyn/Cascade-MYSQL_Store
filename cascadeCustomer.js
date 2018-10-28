@@ -45,7 +45,11 @@ function displayAll() {
         validate: function validateID(name){
           // console.log('id: ', name);
           if(isNaN(name)===true){
-            console.log('Be sure to specify the correct ID as a number!')
+            console.log('\nBe sure to specify the correct ID as a number!')
+            return false;
+          }
+          else if(name === ""){
+            console.log('\nBe sure to specify the correct ID as a number!')
             return false;
           }
           else {
@@ -60,7 +64,11 @@ function displayAll() {
         validate: function validateID(name){
           // console.log('id: ', name);
           if(isNaN(name)===true){
-            console.log('Be sure to specify the correct ID as a number!')
+            console.log('\nBe sure to specify the correct ID as a number!')
+            return false;
+          }
+          else if(name === ""){
+            console.log('\nBe sure to specify the correct ID as a number!')
             return false;
           }
           else {
