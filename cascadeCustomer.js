@@ -43,8 +43,23 @@ function displayAll() {
         message: "What is the item ID of the product you'd like to purchase?",
         name: "id",
         validate: function validateID(name){
-          console.log('id: ',name);
-          if(isNaN(name)){
+          // console.log('id: ', name);
+          if(isNaN(name)===true){
+            console.log('Be sure to specify the correct ID as a number!')
+            return false;
+          }
+          else {
+            return true;
+          }
+      }
+      },
+      {
+        type: "input",
+        message: "How many of them would you like to purchase?",
+        name: "quantity",
+        validate: function validateID(name){
+          // console.log('id: ', name);
+          if(isNaN(name)===true){
             console.log('Be sure to specify the correct ID as a number!')
             return false;
           }
