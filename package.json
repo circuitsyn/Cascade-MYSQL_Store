@@ -1,0 +1,24 @@
+{
+  "name": "Cascade-MYSQL_Store",
+  "version": "1.0.0",
+  "description": "A Node and MYSQL inventory application",
+  "main": "cascadeCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/circuitsyn/Cascade-MYSQL_Store.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/circuitsyn/Cascade-MYSQL_Store/issues"
+  },
+  "homepage": "https://github.com/circuitsyn/Cascade-MYSQL_Store#readme",
+  "dependencies": {
+    "inquirer": "^6.2.0",
+    "mysql": "^2.16.0"
+  }
+}
