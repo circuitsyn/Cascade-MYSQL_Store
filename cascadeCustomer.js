@@ -17,8 +17,52 @@ var connection = mysql.createConnection({
 
 function displayAll() {
   connection.connect(function(err) {
+    // console.log("connected as id " + connection.threadId);
     if (err) throw err;
-    console.log("connected as id " + connection.threadId);
+        
+    var query = connection.query("SELECT * FROM products", function(err, res) {
+      console.table(res);
+      for (var i = 0; i < res.length; i++) {
+        console.log(res[i].ID + " | " + res[i].Product_Name + " | " + res[i].Dept_Name + " | " + res[i].Price + " | " + res[i].Stock_Qty + " | " + res[i].Sold);
+      }
+      console.log("");
+      customerAsk();
+    });
+  });
+    
+   
+  };
+
+  function customerAsk(){
+    
+    inquirer
+    .prompt([
+      // Here we create a basic text prompt.
+      {
+        type: "input",
+        message: "What is the item ID of the product you'd like to purchase?",
+        name: "id",
+        validate: function validateID(name){
+          console.log('id: ',name);
+          if(isNaN(name)){
+            console.log('Be sure to specify the correct ID as a number!')
+            return false;
+          }
+          else {
+            return true;
+          }
+      }
+      },
+     
+    ])
+    .then(function(response) {
+      console.log(response);
+  });
+};
+
+
+// Greeting
+    
     console.log("");
     console.log("  .oooooo.                                                  .o8       ");
     console.log(" d8P'  'Y8b                                                 888         ");
@@ -28,18 +72,7 @@ function displayAll() {
     console.log("'88b    ooo  d8(  888  o.  )88b 888   .o8  d8(  888  888   888  888    .o ");
     console.log(" 'Y8bood8P'  'Y888'8o  ''888P'  Y8bod8P'  'Y888''8o  Y8bod88P'   Y8bod8P'");
     console.log("");
-    console.log('Welcome to Cascade! Where our prices are always falling!');
+    console.log('\t Welcome to Cascade! Where our prices are always falling!');
     console.log("");
-    
-    var query = connection.query("SELECT * FROM products", function(err, res) {
-      console.table(res);
-      for (var i = 0; i < res.length; i++) {
-        console.log(res[i].ID + " | " + res[i].Product_Name + " | " + res[i].Dept_Name + " | " + res[i].Price + " | " + res[i].Stock_Qty + " | " + res[i].Sold);
-      }
-    });
-  });
-    // logs the actual query being run
-   
-  };
-
-  displayAll();
+  
+    displayAll();
