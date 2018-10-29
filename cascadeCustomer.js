@@ -2,7 +2,7 @@ var mysql = require("mysql");
 var inquirer = require("inquirer");
 var amount = 0;
 var item = 0;
-
+const cTable = require('console.table');
 var connection = mysql.createConnection({
   host: "localhost",
   multipleStatements: true,
@@ -61,7 +61,7 @@ function checkValue(item, amount) {
   connection.query("SELECT * FROM products", function(err, results) {
     if (err) throw err;
     index = item-1;
-    // console.log(results);
+    console.table(results);
     sold = (parseInt(results[index].Sold) + parseInt(amount));
     stock = parseInt(results[index].Stock_Qty)
     product = results[index].Product_Name;
@@ -91,6 +91,7 @@ function displayAll() {
         
     var query = connection.query("SELECT * FROM products;", function(err, res) {
       // console.table(res);
+
       for (var i = 0; i < res.length; i++) {
         console.log(res[i].ID + " | " + res[i].Product_Name + " | " + res[i].Dept_Name + " | " + res[i].Price + " | " + res[i].Stock_Qty + " | " + res[i].Sold);
       }
