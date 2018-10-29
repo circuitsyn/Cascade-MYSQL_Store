@@ -1,8 +1,11 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var amount = 0;
+var item = 0;
 
 var connection = mysql.createConnection({
   host: "localhost",
+  multipleStatements: true,
 
   // Your port; if not 3306
   port: 3306,
@@ -15,12 +18,76 @@ var connection = mysql.createConnection({
   database: "CASCADE_DB"
 });
 
+function updateProduct(item, sold, amount, stock, product, price){
+  index = item-1;
+  newStock = stock - amount;
+  console.log('::in the update loop::');
+  console.log('sold: ', sold);
+  console.log('item: ', item)
+  console.log('amount: ', amount);
+  console.log('index: ', index);
+  console.log('stock: ', stock);
+  console.log('newStock: ', newStock);
+  
+
+  connection.query("UPDATE products SET ? WHERE ?; UPDATE products SET ? WHERE ?;",
+  [
+    {
+      Sold: sold
+    },
+    {
+      ID: item
+    },
+    {
+      Stock_Qty: newStock
+    },
+    {
+      ID: item
+    }
+  ],
+        function(err) {
+          if (err) throw err;
+          console.log("Thank you for your purchase of " + product + "!");
+          console.log("Your total is: " + price * amount);
+          
+        }
+      );
+};
+
+function checkValue(item, amount) {
+  // query the database for all items being auctioned
+  connection.query("SELECT * FROM products", function(err, results) {
+    if (err) throw err;
+    index = item-1;
+    console.log(results);
+    sold = parseInt(results[index].Sold + amount);
+    stock = parseInt(results[index].Stock_Qty)
+    product = results[index].Product_Name;
+    price = results[index].Price;
+    console.log('stock: ', stock);
+    console.log('sold: ', sold);
+    console.log('item: ', item)
+    console.log('amount: ', amount);
+    console.log('current sold: ', (results[item-1].Sold));
+    console.log('product: ', results[item-1].Product_Name);
+
+    if ((results[item-1].Stock_Qty - amount) > 0){
+      
+      updateProduct(item, sold, amount, stock, product, price);
+    }
+    else{
+      console.log('Our apologies we do not have enough in stock. We will work on restocking that time soon! Please do check out our other items for making another fantastic purchase at Cascade.');
+    }
+});
+
+};
+
 function displayAll() {
   connection.connect(function(err) {
     // console.log("connected as id " + connection.threadId);
     if (err) throw err;
         
-    var query = connection.query("SELECT * FROM products", function(err, res) {
+    var query = connection.query("SELECT * FROM products;", function(err, res) {
       console.table(res);
       for (var i = 0; i < res.length; i++) {
         console.log(res[i].ID + " | " + res[i].Product_Name + " | " + res[i].Dept_Name + " | " + res[i].Price + " | " + res[i].Stock_Qty + " | " + res[i].Sold);
@@ -33,6 +100,7 @@ function displayAll() {
    
   };
 
+  //Inquiry to ask customer what they want to do
   function customerAsk(){
     
     inquirer
@@ -80,11 +148,16 @@ function displayAll() {
     ])
     .then(function(response) {
       console.log(response);
+      item = response.id;
+      console.log('item: ', item);
+      amount = response.quantity; 
+      console.log('amount: ', amount);
+      checkValue(item, amount);
   });
 };
 
 
-// Greeting
+// ---------------------- Greeting -------------------------
     
     console.log("");
     console.log("  .oooooo.                                                  .o8       ");
@@ -98,4 +171,5 @@ function displayAll() {
     console.log('\t Welcome to Cascade! Where our prices are always falling!');
     console.log("");
   
+    //Kick off to star display of data
     displayAll();
