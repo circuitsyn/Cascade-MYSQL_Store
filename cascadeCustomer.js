@@ -21,13 +21,13 @@ var connection = mysql.createConnection({
 function updateProduct(item, sold, amount, stock, product, price){
   index = item-1;
   newStock = stock - amount;
-  console.log('::in the update loop::');
-  console.log('sold: ', sold);
-  console.log('item: ', item)
-  console.log('amount: ', amount);
-  console.log('index: ', index);
-  console.log('stock: ', stock);
-  console.log('newStock: ', newStock);
+  // console.log('::in the update loop::');
+  // console.log('sold: ', sold);
+  // console.log('item: ', item)
+  // console.log('amount: ', amount);
+  // console.log('index: ', index);
+  // console.log('stock: ', stock);
+  // console.log('newStock: ', newStock);
   
 
   connection.query("UPDATE products SET ? WHERE ?; UPDATE products SET ? WHERE ?;",
@@ -61,17 +61,17 @@ function checkValue(item, amount) {
   connection.query("SELECT * FROM products", function(err, results) {
     if (err) throw err;
     index = item-1;
-    console.log(results);
+    // console.log(results);
     sold = (parseInt(results[index].Sold) + parseInt(amount));
     stock = parseInt(results[index].Stock_Qty)
     product = results[index].Product_Name;
     price = results[index].Price;
-    console.log('stock: ', stock);
-    console.log('sold: ', sold);
-    console.log('item: ', item)
-    console.log('amount: ', amount);
-    console.log('current sold: ', (results[item-1].Sold));
-    console.log('product: ', results[item-1].Product_Name);
+    // console.log('stock: ', stock);
+    // console.log('sold: ', sold);
+    // console.log('item: ', item)
+    // console.log('amount: ', amount);
+    // console.log('current sold: ', (results[item-1].Sold));
+    // console.log('product: ', results[item-1].Product_Name);
 
     if ((results[index].Stock_Qty - amount) > 0){
       
@@ -90,7 +90,7 @@ function displayAll() {
     if (err) throw err;
         
     var query = connection.query("SELECT * FROM products;", function(err, res) {
-      console.table(res);
+      // console.table(res);
       for (var i = 0; i < res.length; i++) {
         console.log(res[i].ID + " | " + res[i].Product_Name + " | " + res[i].Dept_Name + " | " + res[i].Price + " | " + res[i].Stock_Qty + " | " + res[i].Sold);
       }
@@ -113,7 +113,7 @@ function displayAll() {
         message: "What is the item ID of the product you'd like to purchase?",
         name: "id",
         validate: function validateID(name){
-          // console.log('id: ', name);
+          
           if(isNaN(name)===true){
             console.log('\nBe sure to specify the correct ID as a number!')
             return false;
@@ -132,7 +132,7 @@ function displayAll() {
         message: "How many of them would you like to purchase?",
         name: "quantity",
         validate: function validateID(name){
-          // console.log('id: ', name);
+          
           if(isNaN(name)===true){
             console.log('\nBe sure to specify the correct ID as a number!')
             return false;
@@ -149,11 +149,11 @@ function displayAll() {
      
     ])
     .then(function(response) {
-      console.log(response);
+      // console.log(response);
       item = response.id;
-      console.log('item: ', item);
+      // console.log('item: ', item);
       amount = response.quantity; 
-      console.log('amount: ', amount);
+      // console.log('amount: ', amount);
       checkValue(item, amount);
   });
 };
