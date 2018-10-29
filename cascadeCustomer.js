@@ -49,6 +49,8 @@ function updateProduct(item, sold, amount, stock, product, price){
           if (err) throw err;
           console.log("Thank you for your purchase of " + product + "!");
           console.log("Your total is: " + price * amount);
+          console.log('');
+          // displayAll();
           
         }
       );
@@ -60,7 +62,7 @@ function checkValue(item, amount) {
     if (err) throw err;
     index = item-1;
     console.log(results);
-    sold = parseInt(results[index].Sold + amount);
+    sold = (parseInt(results[index].Sold) + parseInt(amount));
     stock = parseInt(results[index].Stock_Qty)
     product = results[index].Product_Name;
     price = results[index].Price;
@@ -71,7 +73,7 @@ function checkValue(item, amount) {
     console.log('current sold: ', (results[item-1].Sold));
     console.log('product: ', results[item-1].Product_Name);
 
-    if ((results[item-1].Stock_Qty - amount) > 0){
+    if ((results[index].Stock_Qty - amount) > 0){
       
       updateProduct(item, sold, amount, stock, product, price);
     }
