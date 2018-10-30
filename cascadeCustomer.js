@@ -23,15 +23,7 @@ var connection = mysql.createConnection({
 function updateProduct(item, sold, amount, stock, product, price){
   index = item-1;
   newStock = stock - amount;
-  // console.log('::in the update loop::');
-  // console.log('sold: ', sold);
-  // console.log('item: ', item)
-  // console.log('amount: ', amount);
-  // console.log('index: ', index);
-  // console.log('stock: ', stock);
-  // console.log('newStock: ', newStock);
   
-
   connection.query("UPDATE products SET ? WHERE ?; UPDATE products SET ? WHERE ?;",
   [
     {
@@ -56,7 +48,8 @@ function updateProduct(item, sold, amount, stock, product, price){
           
         }
       );
-      // connection.end();
+      
+      //restart again creating a loop by calling the starting function
       displayAll();
 };
 
@@ -70,13 +63,7 @@ function checkValue(item, amount) {
     stock = parseInt(results[index].Stock_Qty)
     product = results[index].Product_Name;
     price = results[index].Price;
-    // console.log('stock: ', stock);
-    // console.log('sold: ', sold);
-    // console.log('item: ', item)
-    // console.log('amount: ', amount);
-    // console.log('current sold: ', (results[item-1].Sold));
-    // console.log('product: ', results[item-1].Product_Name);
-
+    
     if ((results[index].Stock_Qty - amount) > 0){
       
       updateProduct(item, sold, amount, stock, product, price);

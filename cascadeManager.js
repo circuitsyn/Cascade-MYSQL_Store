@@ -28,6 +28,16 @@ function connect(){
     });
     };
 
+    function viewProducts(){
+        var query = connection.query("SELECT ID, Product_Name , Price, Stock_QTY FROM products;", function(err, res) {
+            console.log("");
+            console.table(res);
+            console.log("");
+            
+          managerAsk();
+        });
+    }
+
     function managerAsk(){
     
         inquirer
@@ -35,16 +45,32 @@ function connect(){
           // Here we create a basic text prompt.
           {
             type: "rawlist",
-            message: "Greetings, what action would you like to perform today?",
-            choices: ['View Products for Sale.', 'View Low Inventory', 'Add to Inventory', 'Add New Product'],
+            message: "Greetings, what action would you like to perform today? (select by picking a #)",
+            choices: ['View Products for Sale', 'View Low Inventory', 'Add to Inventory', 'Add New Product'],
             name: "action",
            },
 
-         
-        ])
+         ])
         .then(function(response) {
           console.log(response);
           console.log('you made it to the promise land!');
+
+            switch (response.action) {
+                case 'View Products for Sale':
+                    viewProducts();
+                    break;
+                case 'View Low Inventory':
+                    viewLowInventory();
+                    break;
+                case 'Add to Inventory':
+                    addToInventory();
+                    break;
+                case 'Add New Product':
+                    addNewProduct();
+                    break;
+                default:
+                    console.log('Whoops! Looks like something went wrong. Are you sure you picked a number 1-4?');
+            }
       });
     };
 
