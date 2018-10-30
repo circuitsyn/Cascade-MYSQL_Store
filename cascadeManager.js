@@ -60,7 +60,7 @@ function managerAsk(){
         type: "rawlist",
         message: "Greetings, what action would you like to perform today? (select by picking a #)",
         choices: ['View Products for Sale', 'View Low Inventory', 'Add to Inventory', 'Add New Product'],
-        name: "action",
+        name: "action", 
         },
 
         ])
