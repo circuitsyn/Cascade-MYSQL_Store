@@ -98,11 +98,7 @@ connection.connect(function(err) {
 function displayAll() {
         
     var query = connection.query("SELECT * FROM products;", function(err, res) {
-      // console.table(res);
-      
-      for (var i = 0; i < res.length; i++) {
-        console.log(res[i].ID + " | " + res[i].Product_Name + " | " + res[i].Dept_Name + " | " + res[i].Price + " | " + res[i].Stock_Qty + " | " + res[i].Sold);
-      }
+      console.table(res);
       console.log("");
       customerAsk();
     });
