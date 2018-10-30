@@ -1,6 +1,7 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var amount = 0;
+var stock = 0;
 var item = 0;
 const cTable = require('console.table');
 // var Table = require('cli-table');
@@ -44,11 +45,114 @@ function viewLowInventory(){
     var query = connection.query("SELECT ID, Product_Name , Price, Stock_QTY FROM products WHERE Stock_Qty < 20;", function(err, res) {
         console.log("");
         console.table(res);
+        console.log(res);
         console.log("");
         
         managerAsk();
     });
     };
+
+//function to store data in a variable for later use
+function getQty(ID) {
+    var query = connection.query("SELECT Stock_QTY FROM products WHERE ID = ?;",[ID] ,function(err, res) {
+        if (err) throw err;
+        console.log("inside getQTY");
+        console.table(res);
+        managerAsk();
+        console.log("");
+        stock = res.Stock_QTY;
+        
+    });
+}
+
+function updatedItem(id) {
+    console.log('id value in updatedItem', id);
+    var query = connection.query("SELECT ID, Product_Name , Price, Stock_QTY FROM products WHERE ID = ?;",[id],function(err, res) {
+        if (err) throw err;
+        console.log('Your item has been updated. Please see below:');
+        console.table(res);
+               
+    });
+};
+
+//function to add to inventory
+function addToInventory(){
+    // viewProducts();
+
+    inquirer
+        .prompt([
+            // Here we create a basic text prompt.
+            {
+                type: "input",
+                message: "What item (ID) would you like to update?",
+                name: "id", 
+                validate: function validateID(name){
+          
+                    if(isNaN(name)===true){
+                      console.log('\nBe sure to specify the correct ID as a number!')
+                      return false;
+                    }
+                    else if(name === ""){
+                      console.log('\nBe sure to specify the correct ID as a number!')
+                      return false;
+                    }
+                    else {
+                      return true;
+                    }
+                }
+            },
+            {
+                type: "input",
+                message: "How many would you like to order and add to the stock (whole number)?",
+                name: "qty", 
+                validate: function validateID(name){
+          
+                    if(isNaN(name)===true){
+                      console.log('\nBe sure to specify the correct ID as a number!')
+                      return false;
+                    }
+                    else if(name === ""){
+                      console.log('\nBe sure to specify the correct ID as a number!')
+                      return false;
+                    }
+                    else {
+                      return true;
+                    }
+                }
+            },
+
+            ])
+        .then(function(response) {
+            console.log(response);
+            getQty(response.id);  
+            console.log('stock in add function: ', stock);
+            connection.query("UPDATE products SET ? WHERE ?; SELECT ID, Product_Name , Price, Stock_QTY FROM products WHERE ID = ?;",
+            [
+              {
+                Stock_QTY: (stock + response.qty),
+              },
+              {
+                ID: response.id,
+              },
+              {
+                ID: response.id,
+              },
+              
+            ],
+                  function(err) {
+                    if (err) throw err;
+                    // console.log(res1);
+                    // console.table(res2);
+                    updatedItem(response.id);
+                    
+                  }
+                );
+                
+                //restart again creating a loop by calling the starting function
+               
+    });
+};
+
 
 //function call to ask the manager what they would like to do
 function managerAsk(){
@@ -66,7 +170,7 @@ function managerAsk(){
         ])
     .then(function(response) {
         console.log(response);
-        console.log('you made it to the promise land!');
+        
 
         switch (response.action) {
             case 'View Products for Sale':
