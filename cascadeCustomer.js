@@ -3,6 +3,8 @@ var inquirer = require("inquirer");
 var amount = 0;
 var item = 0;
 const cTable = require('console.table');
+var Table = require('cli-table');
+
 var connection = mysql.createConnection({
   host: "localhost",
   multipleStatements: true,
@@ -50,10 +52,12 @@ function updateProduct(item, sold, amount, stock, product, price){
           console.log("Thank you for your purchase of " + product + "!");
           console.log("Your total is: " + price * amount);
           console.log('');
-          // displayAll();
+          
           
         }
       );
+      // connection.end();
+      displayAll();
 };
 
 function checkValue(item, amount) {
@@ -84,23 +88,25 @@ function checkValue(item, amount) {
 
 };
 
+function connect(){
+connection.connect(function(err) {
+  // console.log("connected as id " + connection.threadId);
+  if (err) throw err;
+});
+};
+
 function displayAll() {
-  connection.connect(function(err) {
-    // console.log("connected as id " + connection.threadId);
-    if (err) throw err;
         
     var query = connection.query("SELECT * FROM products;", function(err, res) {
       // console.table(res);
-
+      
       for (var i = 0; i < res.length; i++) {
         console.log(res[i].ID + " | " + res[i].Product_Name + " | " + res[i].Dept_Name + " | " + res[i].Price + " | " + res[i].Stock_Qty + " | " + res[i].Sold);
       }
       console.log("");
       customerAsk();
     });
-  });
     
-   
   };
 
   //Inquiry to ask customer what they want to do
@@ -159,7 +165,7 @@ function displayAll() {
   });
 };
 
-
+connect();
 // ---------------------- Greeting -------------------------
     
     console.log("");
