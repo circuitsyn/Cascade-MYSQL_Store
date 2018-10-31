@@ -45,32 +45,50 @@ function viewLowInventory(){
     var query = connection.query("SELECT ID, Product_Name , Price, Stock_QTY FROM products WHERE Stock_Qty < 20;", function(err, res) {
         console.log("");
         console.table(res);
-        console.log(res);
         console.log("");
-        
         managerAsk();
     });
     };
 
+//function to update stock
+function updateProducts(stock, id, qty){
+    connection.query("UPDATE products SET ? WHERE ?;",
+            
+    [
+        {
+        Stock_QTY: (parseInt(stock) + parseInt(qty)),
+        },
+        {
+        ID: id,
+        },                
+    ],
+            function(err) {
+            if (err) throw err;
+            updatedItem(id);
+            
+            }
+        );    
+        
+};
+
 //function to store data in a variable for later use
-function getQty(ID) {
+function getQty(ID, qty) {
     var query = connection.query("SELECT Stock_QTY FROM products WHERE ID = ?;",[ID] ,function(err, res) {
         if (err) throw err;
-        console.log("inside getQTY");
-        console.table(res);
-        managerAsk();
-        console.log("");
-        stock = res.Stock_QTY;
-        
+        stock = res[0].Stock_QTY;
+        updateProducts(stock, ID, qty);
     });
+    return stock;
 }
 
 function updatedItem(id) {
-    console.log('id value in updatedItem', id);
+    console.log("");
     var query = connection.query("SELECT ID, Product_Name , Price, Stock_QTY FROM products WHERE ID = ?;",[id],function(err, res) {
         if (err) throw err;
         console.log('Your item has been updated. Please see below:');
         console.table(res);
+        console.log("");
+        managerAsk();
                
     });
 };
@@ -123,34 +141,8 @@ function addToInventory(){
 
             ])
         .then(function(response) {
-            console.log(response);
-            getQty(response.id);  
-            console.log('stock in add function: ', stock);
-            connection.query("UPDATE products SET ? WHERE ?; SELECT ID, Product_Name , Price, Stock_QTY FROM products WHERE ID = ?;",
-            [
-              {
-                Stock_QTY: (stock + response.qty),
-              },
-              {
-                ID: response.id,
-              },
-              {
-                ID: response.id,
-              },
-              
-            ],
-                  function(err) {
-                    if (err) throw err;
-                    // console.log(res1);
-                    // console.table(res2);
-                    updatedItem(response.id);
-                    
-                  }
-                );
-                
-                //restart again creating a loop by calling the starting function
-               
-    });
+            getQty(response.id, response.qty);  
+        });
 };
 
 
