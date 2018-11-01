@@ -16,13 +16,22 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "Spartan117",
+  password: "nada",
   database: "CASCADE_DB"
 });
+
+function updateSalesTotal(item, total) {
+  connection.query("UPDATE products SET Product_Sales = Product_Sales + ? WHERE ID = ?;",[total,item],
+        function(err) {
+          if (err) throw err;
+
+        });
+};
 
 function updateProduct(item, sold, amount, stock, product, price){
   index = item-1;
   newStock = stock - amount;
+  total = price * amount;
   
   connection.query("UPDATE products SET ? WHERE ?; UPDATE products SET ? WHERE ?;",
   [
@@ -42,9 +51,9 @@ function updateProduct(item, sold, amount, stock, product, price){
         function(err) {
           if (err) throw err;
           console.log("Thank you for your purchase of " + product + "!");
-          console.log("Your total is: " + price * amount);
+          console.log("Your total is: " + total);
           console.log('');
-          
+          updateSalesTotal(item,total);
           
         }
       );
@@ -84,7 +93,7 @@ connection.connect(function(err) {
 
 function displayAll() {
         
-    var query = connection.query("SELECT * FROM products;", function(err, res) {
+    var query = connection.query("SELECT ID, Product_Name, Dept_Name, Price, Stock_Qty FROM products;", function(err, res) {
       console.table(res);
       console.log("");
       customerAsk();
