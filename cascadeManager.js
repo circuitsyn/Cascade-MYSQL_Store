@@ -104,6 +104,94 @@ function addToInventory(){
                 type: "input",
                 message: "What item (ID) would you like to update?",
                 name: "id", 
+                // validate: function validateID(name){
+          
+                //     if(isNaN(name)===true){
+                //       console.log('\nBe sure to specify the correct ID as a number!')
+                //       return false;
+                //     }
+                //     else if(name === ""){
+                //       console.log('\nBe sure to specify the correct ID as a number!')
+                //       return false;
+                //     }
+                //     else {
+                //       return true;
+                //     }
+                // }
+            },
+            {
+                type: "input",
+                message: "How many would you like to order and add to the stock (whole number)?",
+                name: "qty", 
+                // validate: function validateID(name){
+          
+                //     if(isNaN(name)===true){
+                //       console.log('\nBe sure to specify the correct ID as a number!')
+                //       return false;
+                //     }
+                //     else if(name === ""){
+                //       console.log('\nBe sure to specify the correct ID as a number!')
+                //       return false;
+                //     }
+                //     else {
+                //       return true;
+                //     }
+                // }
+            },
+
+            ])
+        .then(function(response) {
+            getQty(response.id, response.qty);  
+        });
+};
+
+function addNewProduct() {
+    console.log("\nFantastic, let's add a new product! To get started let's answer a few questions:\n")
+    inquirer
+        .prompt([
+            // Here we create a basic text prompt.
+            {
+                type: "input",
+                message: "What is the product name?",
+                name: "prodName", 
+                // validate: function validateID(name){
+          
+                //     if(isNaN(name)===true){
+                //       console.log('\nBe sure to specify the correct ID as a number!')
+                //       return false;
+                //     }
+                //     else if(name === ""){
+                //       console.log('\nBe sure to specify the correct ID as a number!')
+                //       return false;
+                //     }
+                //     else {
+                //       return true;
+                //     }
+                // }
+            },
+            {
+                type: "input",
+                message: "What is the department Name it falls under?",
+                name: "deptName", 
+                // validate: function validateID(name){
+          
+                //     if(isNaN(name)===true){
+                //       console.log('\nBe sure to specify the correct ID as a number!')
+                //       return true;
+                //     }
+                //     else if(name === ""){
+                //       console.log('\nBe sure to specify a text based department name!')
+                //       return false;
+                //     }
+                //     else {
+                //       return true;
+                //     }
+                // }
+            },
+            {
+                type: "input",
+                message: "What is the price of the item?",
+                name: "price", 
                 validate: function validateID(name){
           
                     if(isNaN(name)===true){
@@ -121,8 +209,8 @@ function addToInventory(){
             },
             {
                 type: "input",
-                message: "How many would you like to order and add to the stock (whole number)?",
-                name: "qty", 
+                message: "How many are in stock?",
+                name: "stockQTY", 
                 validate: function validateID(name){
           
                     if(isNaN(name)===true){
@@ -141,10 +229,21 @@ function addToInventory(){
 
             ])
         .then(function(response) {
-            getQty(response.id, response.qty);  
-        });
-};
+            var buildProd = response.prodName; 
+            var buildDept = response.deptName;
+            var buildPrice = response.price; 
+            var buildStock = response.stockQTY;          
+        
+        var query = connection.query("INSERT INTO products (Product_Name, Dept_Name, Price, Stock_Qty) VALUES (?, ?, ?, ?);",[buildProd, buildDept, buildPrice, buildStock],function(err, res) {
+            if (err) throw err;
+            console.log("\nCongrats on adding a new product! Here is your product with the rest!")
+            viewProducts();
+    
 
+    });
+});
+
+};
 
 //function call to ask the manager what they would like to do
 function managerAsk(){
@@ -161,7 +260,7 @@ function managerAsk(){
 
         ])
     .then(function(response) {
-        console.log(response);
+        // console.log(response);
         
 
         switch (response.action) {
