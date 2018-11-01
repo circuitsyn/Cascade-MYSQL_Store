@@ -17,7 +17,7 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "Spartan117",
+  password: "nada",
   database: "CASCADE_DB"
 });
 
