@@ -20,6 +20,7 @@ var connection = mysql.createConnection({
   database: "CASCADE_DB"
 });
 
+//function to see if the user wants to continue or exit
 function continueQ(){
   inquirer
     .prompt([
@@ -44,6 +45,7 @@ function continueQ(){
 });
 };
 
+//function that udates Product_Sales with the current total sales to date
 function updateSalesTotal(item, total) {
   connection.query("UPDATE products SET Product_Sales = Product_Sales + ? WHERE ID = ?;",[total,item],
         function(err) {
@@ -52,6 +54,7 @@ function updateSalesTotal(item, total) {
         });
 };
 
+//function that updates the sold by adding total items bought column as well decreasing the stock due to the purchase 
 function updateProduct(item, sold, amount, stock, product, price){
   index = item-1;
   newStock = stock - amount;
@@ -86,6 +89,7 @@ function updateProduct(item, sold, amount, stock, product, price){
       
 };
 
+//function that checks to see if stock is low or not and if so lets the user know.
 function checkValue(item, amount) {
   // query the database for all items being auctioned
   connection.query("SELECT * FROM products", function(err, results) {
@@ -181,7 +185,9 @@ function displayAll() {
   });
 };
 
+//Starts connection to the data base - only needs to be called once
 connect();
+
 // ---------------------- Greeting -------------------------
     
     console.log("");
