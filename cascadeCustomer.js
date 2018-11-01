@@ -20,6 +20,30 @@ var connection = mysql.createConnection({
   database: "CASCADE_DB"
 });
 
+function continueQ(){
+  inquirer
+    .prompt([
+      // Here we create a basic text prompt.
+      {
+        type: "list",
+        message: "Would you like to continue or exit the store?",
+        choices: ['Yes', 'No'],
+        name: "answer",
+      }
+    
+    ])
+    .then(function(response) {
+      switch (response.answer) {
+        case 'Yes':
+        displayAll();
+        break;
+        case 'No':
+        process.exit();
+        break;
+      }
+});
+};
+
 function updateSalesTotal(item, total) {
   connection.query("UPDATE products SET Product_Sales = Product_Sales + ? WHERE ID = ?;",[total,item],
         function(err) {
@@ -54,12 +78,12 @@ function updateProduct(item, sold, amount, stock, product, price){
           console.log("Your total is: " + total);
           console.log('');
           updateSalesTotal(item,total);
-          
+          continueQ();
         }
       );
       
-      //restart again creating a loop by calling the starting function
-      displayAll();
+      //Ask if you want to continue
+      
 };
 
 function checkValue(item, amount) {
