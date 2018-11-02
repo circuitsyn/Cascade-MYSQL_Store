@@ -254,7 +254,7 @@ function managerAsk(){
         {
         type: "rawlist",
         message: "Greetings, what action would you like to perform today? (select by picking a #)",
-        choices: ['View Products for Sale', 'View Low Inventory', 'Add to Inventory', 'Add New Product'],
+        choices: ['View Products for Sale', 'View Low Inventory', 'Add to Inventory', 'Add New Product', 'Exit'],
         name: "action", 
         },
 
@@ -275,6 +275,9 @@ function managerAsk(){
                 break;
             case 'Add New Product':
                 addNewProduct();
+                break;
+            case 'Exit':
+                process.exit();
                 break;
             default:
                 console.log('Whoops! Looks like something went wrong. Are you sure you picked a number 1-4?');

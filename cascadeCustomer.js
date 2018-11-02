@@ -95,7 +95,6 @@ function checkValue(item, amount) {
   connection.query("SELECT * FROM products", function(err, results) {
     if (err) throw err;
     index = item-1;
-    console.table(results);
     sold = (parseInt(results[index].Sold) + parseInt(amount));
     stock = parseInt(results[index].Stock_Qty)
     product = results[index].Product_Name;
