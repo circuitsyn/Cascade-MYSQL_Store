@@ -8,7 +8,7 @@ Cascade is a full shopping market that contains three separate abilities with su
 ## Cascade - Customer
 In the customer section you can purchase any item in the inventory that is in stock. There is a great selection and money is unlimited!:wink:
 
-[![Cascade_Customer](Images/cascadeCustomer.PNG)](http://www.youtube.com/watch?v=YgwV22wvXxY)
+[![Cascade_Customer](Images/cascadeCustomer.PNG)](https://www.youtube.com/embed/u6SP9P0S__E)
 ###### click image for video
 
 
@@ -19,7 +19,7 @@ The manager area gives you more functions and abilities in order to best manage 
 - Add to Inventory
 - Add New Product
 
-[![Cascade_Manager](Images/cascadeManager.PNG)](http://www.youtube.com/watch?v=z4pn09KQCRI)
+[![Cascade_Manager](Images/cascadeManager.PNG)](https://www.youtube.com/embed/DEFMzgEcXD4)
 ###### click image for video
 
 
@@ -28,7 +28,7 @@ Last, but not least we have the Supervisor functionality. This allows an oversig
 - View Product Sales by Department
 - Create New Department
 
-[![Cascade_Supervisor](Images/cascadeSupervisor.PNG)](http://www.youtube.com/watch?v=U8Zh1yWwQ70)
+[![Cascade_Supervisor](Images/cascadeSupervisor.PNG)](https://youtu.be/7F2Ol5dGd30)
 ###### click image for video
 
 
