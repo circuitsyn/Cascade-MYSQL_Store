@@ -36,7 +36,7 @@ function viewDepts(){
 
 //function to add a department
 function createDept() {
-    console.log("\nFantastic, let's add a new product! To get started let's answer a few questions:\n")
+    console.log("\nFantastic, let's add a new department! To get started let's answer a few questions:\n")
     inquirer
         .prompt([
             // Here we create a basic text prompt.
@@ -87,7 +87,7 @@ function superAsk(){
         {
         type: "rawlist",
         message: "Greetings, what action would you like to perform today? (select by picking a #)",
-        choices: ['View Product Sales by Department', 'Create New Department'],
+        choices: ['View Product Sales by Department', 'Create New Department', 'Exit'],
         name: "action", 
         },
 
@@ -100,6 +100,9 @@ function superAsk(){
                 break;
             case 'Create New Department':
                 createDept();
+                break;
+            case 'Exit':
+                process.exit();
                 break;
             default:
                 console.log('Whoops! Looks like something went wrong. Are you sure you picked a number 1-2?');
