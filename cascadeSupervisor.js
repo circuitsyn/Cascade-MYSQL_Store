@@ -93,12 +93,10 @@ function superAsk(){
 
         ])
     .then(function(response) {
-        console.log(response);
-        
 
         switch (response.action) {
             case 'View Product Sales by Department':
-                viewDepts();
+                viewProdSales();
                 break;
             case 'Create New Department':
                 createDept();
@@ -108,6 +106,14 @@ function superAsk(){
         }
     });
 };
+
+function viewProdSales(){
+    var query = connection.query("SELECT departments.Department_ID, departments.Department_Name, departments.Over_Head_Costs, SUM(products.Sold) AS Total_Sold, SUM(products.Product_Sales) - departments.Over_Head_Costs AS Total_Profit FROM products INNER JOIN departments ON products.Dept_Name = departments.Department_Name GROUP BY departments.Department_Name;", function(err, res) {
+        if (err) throw err;
+        console.table(res);
+        superAsk();
+    });
+}
 
 
 connect();
