@@ -106,6 +106,7 @@ function checkValue(item, amount) {
     }
     else{
       console.log('Our apologies we do not have enough in stock. We will work on restocking that time soon! Please do check out our other items for making another fantastic purchase at Cascade.');
+      continueQ();
     }
 });
 
