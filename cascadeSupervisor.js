@@ -24,6 +24,59 @@ function connect(){
       if (err) throw err;
     });
     };
+//function to view depaertments
+function viewDepts(){
+    var query = connection.query("SELECT Department_ID, Department_Name FROM departments;", function(err, res) {
+        console.log("");
+        console.table(res);
+        console.log("");
+        superAsk();
+    });
+    };
+
+//function to add a department
+function createDept() {
+    console.log("\nFantastic, let's add a new product! To get started let's answer a few questions:\n")
+    inquirer
+        .prompt([
+            // Here we create a basic text prompt.
+            {
+                type: "input",
+                message: "What is the department name you would like to create?",
+                name: "deptName", 
+                // validate: function validateID(name){
+          
+                //     if(isNaN(name)===true){
+                //       console.log('\nBe sure to specify the correct ID as a number!')
+                //       return false;
+                //     }
+                //     else if(name === ""){
+                //       console.log('\nBe sure to specify the correct ID as a number!')
+                //       return false;
+                //     }
+                //     else {
+                //       return true;
+                //     }
+                // }
+            },
+            
+
+            ])
+        .then(function(response) {
+            var buildDept = response.deptName; 
+                    
+            var query = connection.query("INSERT INTO departments (Department_Name) VALUES (?);",[buildDept], async function(err, res) {
+                if (err) throw err;
+                console.log("\nCongrats on adding a new department! Here is your department with the rest!")
+                viewDepts();
+                
+            });
+    
+
+    
+            });
+
+    };
 
 //function call to ask the manager what they would like to do
 function superAsk(){
@@ -45,12 +98,10 @@ function superAsk(){
 
         switch (response.action) {
             case 'View Product Sales by Department':
-                // viewProducts();
-                console.log('view success!');
+                viewDepts();
                 break;
             case 'Create New Department':
-                // viewLowInventory();
-                console.log('create success!');
+                createDept();
                 break;
             default:
                 console.log('Whoops! Looks like something went wrong. Are you sure you picked a number 1-2?');
