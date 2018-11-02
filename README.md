@@ -28,7 +28,7 @@ Last, but not least we have the Supervisor functionality. This allows an oversig
 - View Product Sales by Department
 - Create New Department
 
-[![Cascade_Supervisor](Images/cascadeSupervisor.PNG)](https://youtu.be/7F2Ol5dGd30)
+[![Cascade_Supervisor](Images/cascadeSupervisor.PNG)](https://www.youtube.com/embed/7F2Ol5dGd30)
 ###### click image for video
 
 
