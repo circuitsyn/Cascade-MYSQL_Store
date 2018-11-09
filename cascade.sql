@@ -8,9 +8,11 @@ CREATE TABLE products (
   ID INT AUTO_INCREMENT,
   Product_Name VARCHAR(100) NULL,
   Dept_Name VARCHAR(100) NULL,
-  Price DECIMAL(10,2) NULL,
+  Price DECIMAL(10,2) DEFAULT 0,
   Stock_Qty INTEGER(10),
   Sold INTEGER(10) DEFAULT 0,
+  Product_Sales DECIMAL(10,2) DEFAULT 0,
+
   PRIMARY KEY (id)
 );
 
