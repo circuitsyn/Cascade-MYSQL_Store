@@ -7,8 +7,7 @@ CREATE TABLE departments (
   PRIMARY KEY (Department_ID)
 );
 
-INSERT INTO departments (Department_Name)
-VALUES ('Electronics'), ('Food'), ('Books'), ('Holiday');
+INSERT INTO departments (Department_Name, Over_Head_Costs)
+VALUES ('Electronics', 2105.55), ('Food', 505.25), ('Books', 159.89), ('Holiday', 1323.56);
 
 SELECT * FROM departments;
-
