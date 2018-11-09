@@ -1,10 +1,11 @@
+//Declaration of variables and requirement of needed libraries
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var amount = 0;
 var item = 0;
 const cTable = require('console.table');
-var Table = require('cli-table');
 
+//details to establish connection to MySQL database
 var connection = mysql.createConnection({
   host: "localhost",
   multipleStatements: true,
@@ -15,7 +16,7 @@ var connection = mysql.createConnection({
   // Your username
   user: "root",
 
-  // Your password
+  // Note password
   password: "nada",
   database: "CASCADE_DB"
 });
@@ -85,8 +86,6 @@ function updateProduct(item, sold, amount, stock, product, price){
         }
       );
       
-      //Ask if you want to continue
-      
 };
 
 //function that checks to see if stock is low or not and if so lets the user know.
@@ -112,13 +111,14 @@ function checkValue(item, amount) {
 
 };
 
+//function to kick off the connection to the MySQL database
 function connect(){
 connection.connect(function(err) {
-  // console.log("connected as id " + connection.threadId);
   if (err) throw err;
 });
 };
 
+//function to display all the items for sale
 function displayAll() {
         
     var query = connection.query("SELECT ID, Product_Name, Dept_Name, Price, Stock_Qty FROM products;", function(err, res) {

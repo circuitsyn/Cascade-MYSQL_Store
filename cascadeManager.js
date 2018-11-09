@@ -1,11 +1,12 @@
+//Declaration of variables and requirement of needed libraries
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 var amount = 0;
 var stock = 0;
 var item = 0;
 const cTable = require('console.table');
-// var Table = require('cli-table');
 
+//details to establish connection to MySQL database
 var connection = mysql.createConnection({
   host: "localhost",
   multipleStatements: true,
@@ -81,6 +82,7 @@ function getQty(ID, qty) {
     return stock;
 }
 
+//function used to show the new stock of the increased inventory item
 function updatedItem(id) {
     console.log("");
     var query = connection.query("SELECT ID, Product_Name , Price, Stock_QTY FROM products WHERE ID = ?;",[id],function(err, res) {
@@ -145,6 +147,7 @@ function addToInventory(){
         });
 };
 
+//function to create a new product by taking in data and then inserting it into the MySQL database
 function addNewProduct() {
     console.log("\nFantastic, let's add a new product! To get started let's answer a few questions:\n")
     inquirer
@@ -250,7 +253,7 @@ function managerAsk(){
 
     inquirer
     .prompt([
-        // Here we create a basic text prompt.
+
         {
         type: "rawlist",
         message: "Greetings, what action would you like to perform today? (select by picking a #)",
@@ -260,8 +263,6 @@ function managerAsk(){
 
         ])
     .then(function(response) {
-        // console.log(response);
-        
 
         switch (response.action) {
             case 'View Products for Sale':
@@ -285,7 +286,7 @@ function managerAsk(){
     });
 };
 
-
+//function call to kick off the connection
 connect();
 // ---------------------- Greeting -------------------------
     
@@ -302,4 +303,5 @@ connect();
     console.log('\t ..and where we love our Managers and Staff like Family!');
     console.log("");
 
+    //function call to kick off the program and questions to the manager
     managerAsk();

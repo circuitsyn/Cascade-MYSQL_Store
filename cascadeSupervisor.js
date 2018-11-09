@@ -1,7 +1,10 @@
+//Declaration of variables and requirement of needed libraries
+
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 const cTable = require('console.table');
 
+//details to establish connection to MySQL database
 var connection = mysql.createConnection({
   host: "localhost",
   multipleStatements: true,
@@ -118,7 +121,7 @@ function viewProdSales(){
     });
 }
 
-
+//function call to kick off the connection
 connect();
 // ---------------------- Greeting -------------------------
     
@@ -135,4 +138,5 @@ connect();
     console.log('\t ..and where we love our Supervisors and Staff like Family!');
     console.log("");
 
+    //function call to kick off the program and questions to the supervisor
     superAsk();
