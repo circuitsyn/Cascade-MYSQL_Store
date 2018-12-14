@@ -1,7 +1,7 @@
 # Cascade - a Node.js & MYSQL Experience :department_store::credit_card::dollar::handbag:
 ![Cascade_Store_Front](Images/cascade.PNG)
 
-## Welome to Cascade! WHere the Prices are always falling!
+## Welome to Cascade! Where the Prices are always falling!
 Cascade is a full shopping market that contains three separate abilities with sub-features. There are customer, manager and supervisor sections. In the following I will break each section down with video demos. This application is built using Node.JS, the NPM and MYSQL. 
 
 
